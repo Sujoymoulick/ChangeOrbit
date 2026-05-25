@@ -79,8 +79,16 @@ function handleExport(targetDir) {
     try {
         fs.mkdirSync(resolvedTarget, { recursive: true });
         
-        // Copy HTML, CSS, JS
-        const filesToCopy = ['index.html', 'styles.css', 'app.js', 'login.html'];
+        // Copy HTML, CSS, JS and all asset files for complete premium dashboard operation
+        const filesToCopy = [
+            'index.html', 
+            'changeorbit.html', 
+            'login.html', 
+            'landing.css', 
+            'styles.css', 
+            'app.js', 
+            'changeorbitlogo.png'
+        ];
         filesToCopy.forEach(file => {
             fs.copyFileSync(path.join(publicSrc, file), path.join(resolvedTarget, file));
         });
@@ -110,6 +118,15 @@ function main() {
     
     // Check command
     const command = args[0];
+    
+    // Command validation
+    const KNOWN_COMMANDS = ['serve', 'export', 'logout', 'status'];
+    if (command && !command.startsWith('-') && !KNOWN_COMMANDS.includes(command)) {
+        console.error(`❌ Error: Unknown command "${command}".`);
+        console.log(`💡 Type "changeorbit --help" to view all available commands.\n`);
+        process.exit(1);
+    }
+    
     let serveMode = false;
     let exportMode = false;
     let exportDir = '';
@@ -160,17 +177,36 @@ function main() {
     for (let i = 0; i < flags.length; i++) {
         const flag = flags[i];
         if (flag === '-r' || flag === '--repo') {
-            parsedArgs.repo = flags[++i];
+            const val = flags[++i];
+            if (!val) {
+                console.error(`❌ Error: Option "${flag}" requires a workspace path value.`);
+                process.exit(1);
+            }
+            parsedArgs.repo = val;
         } else if (flag === '-o' || flag === '--output') {
-            parsedArgs.outputDir = flags[++i];
+            const val = flags[++i];
+            if (!val) {
+                console.error(`❌ Error: Option "${flag}" requires an output directory path value.`);
+                process.exit(1);
+            }
+            parsedArgs.outputDir = val;
         } else if (flag === '--repo-url') {
-            parsedArgs.repoUrl = flags[++i];
+            const val = flags[++i];
+            if (!val) {
+                console.error(`❌ Error: Option "${flag}" requires a repository URL value.`);
+                process.exit(1);
+            }
+            parsedArgs.repoUrl = val;
         } else if (flag === '--strict') {
             parsedArgs.strict = true;
         } else if (flag === '-s' || flag === '--serve') {
             parsedArgs.serve = true;
         } else if (flag === '-v' || flag === '--verbose') {
             parsedArgs.verbose = true;
+        } else if (flag.startsWith('-')) {
+            console.error(`❌ Error: Unknown option "${flag}".`);
+            console.log(`💡 Type "changeorbit --help" to view all available options.\n`);
+            process.exit(1);
         }
     }
     
@@ -191,6 +227,7 @@ function main() {
         
         // Start temp server on 9099 and listen for auth success callback
         const serverPort = 9099;
+        let actualServerPort = serverPort;
         
         const serverInstance = startServer(serverPort, (user) => {
             console.log(`\n======================================================`);
@@ -210,14 +247,16 @@ function main() {
                 console.log(`✅ Markdown Document saved to: ${mdPath}`);
                 console.log(`======================================================\n`);
                 console.log(`🌐 ChangeOrbit Dashboard is fully synced and live!`);
-                console.log(`👉 Open: http://localhost:${serverPort}/changeorbit.html\n`);
+                console.log(`👉 Open: http://localhost:${actualServerPort}/changeorbit.html\n`);
             } catch (e) {
                 console.error(`❌ Error generating changelog: ${e.message}`);
             }
+        }, (actualPort) => {
+            // Open browser only after server successfully listens on verified actual port
+            actualServerPort = actualPort;
+            openBrowser(`http://localhost:${actualPort}/changeorbit.html`);
         });
         
-        // Open browser
-        openBrowser(`http://localhost:${serverPort}/changeorbit.html`);
         return;
     }
     
@@ -225,6 +264,7 @@ function main() {
     console.log(`👤 Active Session: ${activeSession.user.name} (@${activeSession.user.login})`);
     console.log(`Generating ChangeOrbit logs...\n`);
     
+    let changelogSuccess = false;
     try {
         const { jsonPath, mdPath } = generateChangelog({
             repo: parsedArgs.repo,
@@ -236,16 +276,19 @@ function main() {
         
         console.log(`✅ Structured Database saved to: ${jsonPath}`);
         console.log(`✅ Markdown Document saved to: ${mdPath}`);
-        
-        if (parsedArgs.serve) {
-            startServer(9099);
-        } else {
-            console.log(`\n💡 To open the interactive web dashboard, run: npx changeorbit serve\n`);
-        }
+        changelogSuccess = true;
     } catch (e) {
         console.error(`❌ Error generating changelog: ${e.message}`);
         console.log(`Type "changeorbit --help" for options.\n`);
-        process.exit(1);
+        if (!parsedArgs.serve) {
+            process.exit(1);
+        }
+    }
+    
+    if (parsedArgs.serve) {
+        startServer(9099);
+    } else if (changelogSuccess) {
+        console.log(`\n💡 To open the interactive web dashboard, run: npx changeorbit serve\n`);
     }
 }
 

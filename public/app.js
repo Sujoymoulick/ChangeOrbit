@@ -260,12 +260,22 @@ function showToast(buttonEl, message) {
 }
 
 /* --- GitHub Profile Session Binders --- */
+
 async function checkSession() {
     try {
         const response = await fetch("/api/user-config");
         if (!response.ok) return;
         
         const config = await response.json();
+        
+        // Dynamically bind running version badge if present
+        if (config && config.version) {
+            const versionBadge = document.getElementById("version-badge");
+            if (versionBadge) {
+                versionBadge.textContent = `v${config.version}`;
+            }
+        }
+
         if (config && config.user) {
             userSession = {
                 ...config.user,
@@ -314,7 +324,46 @@ async function loadChangelogData() {
     } catch (err) {
         console.warn("Could not fetch changelog.json directly. Falling back to embedded local data...", err);
         initializeDashboard(DEFAULT_CHANGELOG_DATA);
+        
+        // Render repository connection failure alert dynamically
+        showRepoConnectionAlert();
     }
+}
+
+function showRepoConnectionAlert() {
+    const sidebar = document.querySelector(".sidebar-panel");
+    if (!sidebar) return;
+    
+    if (document.getElementById("repo-connection-alert")) return;
+    
+    const alert = document.createElement("div");
+    alert.id = "repo-connection-alert";
+    alert.className = "glass-card";
+    alert.style.background = "rgba(239, 68, 68, 0.08)";
+    alert.style.borderColor = "rgba(239, 68, 68, 0.25)";
+    alert.style.padding = "18px";
+    alert.style.borderRadius = "14px";
+    alert.style.display = "flex";
+    alert.style.gap = "14px";
+    alert.style.marginBottom = "24px";
+    alert.style.boxShadow = "0 10px 30px rgba(239, 68, 68, 0.1)";
+    alert.style.animation = "scaleIn 0.3s ease forwards";
+    
+    alert.innerHTML = `
+        <i data-lucide="alert-triangle" style="color: #EF4444; flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px;"></i>
+        <div style="text-align: left;">
+            <h4 style="color: #FFF; font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Git Repository Disconnected</h4>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; margin-bottom: 10px;">
+                The current terminal directory <code>.</code> is not connected to a Git repository. Showing ChangeOrbit demo logs as a preview.
+            </p>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 6px; color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.15);">
+                $ git init && git add . && git commit -m "feat: init"
+            </div>
+        </div>
+    `;
+    
+    sidebar.insertBefore(alert, sidebar.firstChild);
+    lucide.createIcons();
 }
 
 function initializeDashboard(data) {

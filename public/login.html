@@ -265,10 +265,10 @@
                 </div>
                 
                 <div class="input-group">
-                    <label for="github-pat">Personal Access Token <span style="font-size:0.65rem; color:var(--text-muted); text-transform:none;">(Optional)</span></label>
+                    <label for="github-pat">Personal Access Token <span style="font-size:0.65rem; color:#EF4444; text-transform:none;">(Required)</span></label>
                     <div class="input-wrapper">
                         <i data-lucide="key-round"></i>
-                        <input type="password" id="github-pat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxx">
+                        <input type="password" id="github-pat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxx" required>
                     </div>
                 </div>
                 
@@ -319,7 +319,11 @@
             const username = usernameInput.value.trim();
             const pat = patInput.value.trim();
             
-            if (!username) return;
+            if (!username || !pat) {
+                errorBox.textContent = "Both Username and Personal Access Token are required.";
+                errorBox.style.display = "block";
+                return;
+            }
 
             // Set loading state
             const originalBtnHTML = submitBtn.innerHTML;
@@ -327,21 +331,22 @@
             submitBtn.innerHTML = `<span class="loading-spinner"></span> Connecting...`;
 
             try {
-                // Fetch public profile details from GitHub API
-                const headers = {};
-                if (pat) {
-                    headers["Authorization"] = `Bearer ${pat}`;
+                // 1. Validate Personal Access Token against the authenticated user endpoint
+                const headers = { "Authorization": `Bearer ${pat}` };
+                const tokenResponse = await fetch("https://api.github.com/user", { headers });
+                
+                if (tokenResponse.status === 401) {
+                    throw new Error("Invalid Personal Access Token. Please check your token key and permissions.");
+                } else if (!tokenResponse.ok) {
+                    throw new Error(`GitHub API Authorization Failed: ${tokenResponse.statusText}`);
                 }
                 
-                const response = await fetch(`https://api.github.com/users/${username}`, { headers });
+                const profile = await tokenResponse.json();
                 
-                if (response.status === 404) {
-                    throw new Error("GitHub profile was not found. Please check spelling.");
-                } else if (!response.ok) {
-                    throw new Error(`GitHub API Error: ${response.statusText}`);
+                // 2. Enforce that the provided token belongs to the typed username
+                if (profile.login.toLowerCase() !== username.toLowerCase()) {
+                    throw new Error(`The provided token belongs to @${profile.login}, which does not match the typed username @${username}.`);
                 }
-                
-                const profile = await response.json();
                 
                 // Assemble clean user session
                 const user = {
@@ -352,24 +357,22 @@
                     bio: profile.bio || ""
                 };
 
-                // If token is provided, query private primary emails to ensure commit matching works perfectly
-                if (pat) {
-                    try {
-                        const emailRes = await fetch("https://api.github.com/user/emails", { headers });
-                        if (emailRes.ok) {
-                            const emails = await emailRes.json();
-                            const primaryEmailObj = emails.find(e => e.primary);
-                            if (primaryEmailObj) {
-                                user.email = primaryEmailObj.email;
-                            }
+                // Query private primary emails to ensure commit matching works perfectly
+                try {
+                    const emailRes = await fetch("https://api.github.com/user/emails", { headers });
+                    if (emailRes.ok) {
+                        const emails = await emailRes.json();
+                        const primaryEmailObj = emails.find(e => e.primary);
+                        if (primaryEmailObj) {
+                            user.email = primaryEmailObj.email;
                         }
-                    } catch (e) {
-                        console.warn("Could not fetch user emails, using public profile email instead.", e);
                     }
+                } catch (e) {
+                    console.warn("Could not fetch user emails, using profile email instead.", e);
                 }
 
                 const sessionPayload = {
-                    githubToken: pat || "",
+                    githubToken: pat,
                     user: user
                 };
                 

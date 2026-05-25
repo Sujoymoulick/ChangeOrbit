@@ -1,11 +1,11 @@
 {
   "name": "changeorbit",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Sleek and robust Git Conventional Commit Changelog Generator & Interactive Timeline Dashboard",
   "main": "bin/cli.js",
   "type": "module",
   "bin": {
-    "changeorbit": "./bin/cli.js"
+    "changeorbit": "bin/cli.js"
   },
   "files": [
     "bin",

@@ -29,17 +29,18 @@
         <!-- Header -->
         <header class="landing-header">
             <div class="header-logo">
-                <div class="logo-icon">
-                    <i data-lucide="git-branch"></i>
-                </div>
-                <div class="logo-text">
+                <img src="changeorbitlogo.png" alt="ChangeOrbit Logo" style="width: 42px; height: 42px; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.2));">
+                <div class="logo-text" style="display: flex; align-items: center; gap: 8px;">
                     <h1>Change<span>Orbit</span></h1>
+                    <span id="version-badge" class="badge" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; background: rgba(0, 242, 254, 0.12); color: var(--primary-accent); border: 1px solid rgba(0, 242, 254, 0.25); font-weight: 600; letter-spacing: 0.2px;">v1.0.5</span>
                 </div>
             </div>
-            
             <nav class="nav-links">
-                <a href="https://github.com/superstarryeyes/bit" target="_blank" class="btn btn-secondary">
-                    <i data-lucide="github"></i> GitHub
+                <a href="#cli-commands" class="btn btn-secondary">
+                    <i data-lucide="terminal"></i> CLI Commands
+                </a>
+                <a href="#contributors" class="btn btn-secondary">
+                    <i data-lucide="users"></i> Contributors
                 </a>
                 <a href="changeorbit.html" class="btn btn-primary">
                     <i data-lucide="layout-dashboard"></i> Launch Dashboard
@@ -154,21 +155,35 @@ Generating ChangeOrbit logs...
                             <span class="step-num">1</span>
                             <div class="step-details">
                                 <h5>Install or Run Instantly</h5>
-                                <p>Execute globally via NPM or trigger a lightweight transient command using npx.</p>
+                                <p>Execute globally via NPM or trigger a lightweight transient server command using <code>npx</code>.</p>
                             </div>
                         </div>
                         <div class="step-item">
                             <span class="step-num">2</span>
                             <div class="step-details">
-                                <h5>Link Your Profile</h5>
-                                <p>Sync your GitHub token securely with standard bearer authorizations to match avatars and fetch repo metrics.</p>
+                                <h5>Generate Changelog & Database</h5>
+                                <p>Run in any local repository to instantly parse conventional logs and compile standard CHANGELOG.md files.</p>
                             </div>
                         </div>
                         <div class="step-item">
                             <span class="step-num">3</span>
                             <div class="step-details">
-                                <h5>Deploy Anywhere</h5>
-                                <p>Generate markdown changelogs for repositories or export static builds of your interactive timeline cards.</p>
+                                <h5>Launch the Server</h5>
+                                <p>Spin up the built-in HTTP server to securely authenticate with GitHub and host your timeline.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">4</span>
+                            <div class="step-details">
+                                <h5>Static Exporting</h5>
+                                <p>Dump the visual dashboard, styling, and database files into a self-contained static directory for simple deployment.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">5</span>
+                            <div class="step-details">
+                                <h5>Session Control</h5>
+                                <p>Check connection credentials status or log out completely with simple CLI authentication tools.</p>
                             </div>
                         </div>
                     </div>
@@ -177,30 +192,191 @@ Generating ChangeOrbit logs...
                 <!-- Code Snippets Card -->
                 <div class="glass-card guide-code-card">
                     <div class="guide-code-block">
-                        <span class="code-title">Quick Installation</span>
+                        <span class="code-title">1. Installation</span>
                         <div class="code-box">
-                            <pre><code>npm install -g changeorbit</code></pre>
+                            <pre><code># Install globally
+npm install -g changeorbit
+
+# Or run instantly without installing
+npx changeorbit serve</code></pre>
                         </div>
                     </div>
                     
                     <div class="guide-code-block">
-                        <span class="code-title">Run without installing</span>
+                        <span class="code-title">2. Parse & Compile Logs</span>
                         <div class="code-box">
-                            <pre><code>npx changeorbit serve</code></pre>
+                            <pre><code># Run in any Git repository
+changeorbit
+
+# In strict conventional commit mode
+changeorbit --strict
+
+# Specific repo path & override url
+changeorbit --repo ../repo --repo-url https://github.com/user/repo</code></pre>
                         </div>
                     </div>
                     
                     <div class="guide-code-block">
-                        <span class="code-title">Static Page Export</span>
+                        <span class="code-title">3. Start Interactive Server</span>
                         <div class="code-box">
-                            <pre><code>changeorbit export ./docs</code></pre>
+                            <pre><code># Start dashboard on port 9099
+changeorbit serve
+
+# Generate logs and serve immediately
+changeorbit -s</code></pre>
                         </div>
                     </div>
                     
                     <div class="guide-code-block">
-                        <span class="code-title">Command-Line Help</span>
+                        <span class="code-title">4. Static Exporter</span>
                         <div class="code-box">
-                            <pre><code>changeorbit --help</code></pre>
+                            <pre><code># Export visual files & JSON to target folder
+changeorbit export ./public-docs</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="guide-code-block">
+                        <span class="code-title">5. Session Authentication</span>
+                        <div class="code-box">
+                            <pre><code># Check active profile session status
+changeorbit status
+
+# Log out and clear saved GitHub token
+changeorbit logout</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLI Command Reference Section -->
+        <section id="cli-commands" class="cli-section" style="margin-bottom: 80px; scroll-margin-top: 40px;">
+            <div class="section-title">
+                <h3>CLI Reference</h3>
+                <p>Complete list of subcommands and parameters available in the ChangeOrbit executable.</p>
+            </div>
+            
+            <div class="cli-reference-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <!-- Commands -->
+                <div class="glass-card" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 20px;">
+                    <h4 style="color: var(--primary-accent); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="terminal" style="width: 18px; height: 18px;"></i> Subcommands
+                    </h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 18px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit serve</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Generates conventional commit databases and boots the local dashboard HTTP web server.</p>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit export &lt;dir&gt;</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Bundles all dashboard files, assets, and database into a single folder, ready for static CDN deployment.</p>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit status</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Checks the active local GitHub session profile status (username, email, and PAT configurations).</p>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit logout</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Clears and deletes local cached GitHub session tokens and profile assets securely.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Options -->
+                <div class="glass-card" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 20px;">
+                    <h4 style="color: var(--secondary-accent); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="sliders" style="width: 18px; height: 18px;"></i> Global Options
+                    </h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-r, --repo</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Target path to local Git repository (default: current folder <code>.</code>).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-o, --output</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Output path to compile files to (default: current folder <code>.</code>).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">--repo-url</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Manual Git remote origin fallback to link commits to web pages.</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">--strict</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Enforce strict conventional commit checking (ignores other types).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-s, --serve</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Directly start interactive web host dashboard server after compile.</span>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-h, --help</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Displays visual ASCII banner and interactive option descriptions.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributors Section -->
+        <section id="contributors" class="contributors-section" style="scroll-margin-top: 40px;">
+            <div class="section-title">
+                <h3>Core Contributors</h3>
+                <p>The developers bringing ChangeOrbit to your terminal workflows.</p>
+            </div>
+            
+            <div class="contributors-grid">
+                <!-- Contributor 1 -->
+                <div class="glass-card contributor-card">
+                    <div class="contributor-avatar-wrapper">
+                        <img src="https://github.com/Sujoymoulick.png" alt="Sujoy Moulick">
+                    </div>
+                    <div class="contributor-details">
+                        <h4>Sujoy Moulick</h4>
+                        <span class="contributor-role">Project Founder & Lead Architect</span>
+                        <p class="contributor-bio">
+                            Creator of ChangeOrbit. Passionate about crafting high-fidelity CLI developer experiences, zero-dependency tools, and premium responsive web timelines.
+                        </p>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Sujoymoulick" target="_blank">
+                                <i data-lucide="github" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> @Sujoymoulick
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contributor 2 -->
+                <div class="glass-card contributor-card">
+                    <div class="contributor-avatar-wrapper">
+                        <img src="https://github.com/superstarryeyes.png" alt="superstarryeyes">
+                    </div>
+                    <div class="contributor-details">
+                        <h4>superstarryeyes</h4>
+                        <span class="contributor-role">Core Contributor</span>
+                        <p class="contributor-bio">
+                            Developer of the Bit ANSI font library, co-designer of ChangeOrbit CLI ASCII brand components and repository sync mechanisms.
+                        </p>
+                        <div class="contributor-links">
+                            <a href="https://github.com/superstarryeyes" target="_blank">
+                                <i data-lucide="github" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> @superstarryeyes
+                            </a>
                         </div>
                     </div>
                 </div>
