@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangeOrbit — Interactive Commit Changelog</title>
+    
+    <!-- Google Fonts: Outfit (modern sans) & JetBrains Mono (monospace) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <img src="changeorbitlogo.png" alt="ChangeOrbit Logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.2));">
+                <div class="logo-text">
+                    <h1>Change<span>Orbit</span></h1>
+                    <span id="version-badge" class="badge">v1.0.5</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <div id="user-profile-badge" class="user-profile-badge" style="display: none;">
+                    <img id="user-avatar" src="" alt="avatar">
+                    <div class="user-info-text">
+                        <span id="user-display-name">Username</span>
+                        <span id="user-github-handle">@handle</span>
+                    </div>
+                    <button id="logout-btn" class="logout-btn" title="Sign Out">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+                
+                <a id="repo-link" href="#" target="_blank" class="btn btn-secondary btn-icon-only" title="View Repository">
+                    <i data-lucide="github"></i>
+                </a>
+                
+                <button id="theme-toggle" class="btn btn-secondary btn-icon-only" title="Toggle Theme">
+                    <i data-lucide="moon" class="theme-icon-dark"></i>
+                    <i data-lucide="sun" class="theme-icon-light" style="display: none;"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Side: Control & Stats -->
+            <section class="sidebar-panel">
+                
+                <!-- Repo Identity Card -->
+                <div class="glass-card repo-card">
+                    <div class="repo-meta">
+                        <i data-lucide="folder-git-2" class="repo-icon"></i>
+                        <div>
+                            <h2 id="repo-title">Loading Repository...</h2>
+                            <p id="generated-timestamp">Generated: --</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Panel -->
+                <div class="glass-card stats-card">
+                    <h3 class="panel-title"><i data-lucide="bar-chart-3"></i> Repository Metrics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Commits</span>
+                            <span id="stat-commits" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Contributors</span>
+                            <span id="stat-contributors" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Features 🚀</span>
+                            <span id="stat-features" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Bug Fixes 🐛</span>
+                            <span id="stat-fixes" class="stat-value">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Raw Log Parser (Premium Feature) -->
+                <div class="glass-card parser-card">
+                    <h3 class="panel-title"><i data-lucide="terminal"></i> Instant Log Parser</h3>
+                    <p class="panel-subtitle">Visualize another project! Paste output from: <br><code>git log --date=iso-strict --pretty=format:"%H|%an|%ae|%ad|%s|%d"</code></p>
+                    <textarea id="raw-log-input" placeholder="Paste raw git log here..."></textarea>
+                    <div class="parser-buttons">
+                        <button id="parse-log-btn" class="btn btn-primary btn-full">
+                            <i data-lucide="zap"></i> Parse & Visualize
+                        </button>
+                        <button id="reset-log-btn" class="btn btn-secondary">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Contributors List -->
+                <div class="glass-card contributors-card">
+                    <h3 class="panel-title"><i data-lucide="users"></i> Active Contributors</h3>
+                    <div id="contributors-list" class="contributors-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Right Side: Timeline & Filters -->
+            <section class="timeline-panel">
+                
+                <!-- Search and Filters Panel -->
+                <div class="glass-card search-filters-card">
+                    <div class="search-box">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search commits by message, scope, author, or hash...">
+                        <button id="clear-search" class="clear-btn" style="display: none;"><i data-lucide="x"></i></button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <span class="filter-label">Categories:</span>
+                        <div id="type-filters" class="filter-pills">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Container -->
+                <div class="timeline-container">
+                    <div id="no-results" class="no-results-card" style="display: none;">
+                        <i data-lucide="search-code" class="no-results-icon"></i>
+                        <h4>No Commits Found</h4>
+                        <p>Adjust your search query or filters and try again.</p>
+                    </div>
+                    
+                    <div id="timeline" class="timeline">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>ChangeOrbit &bull; Created with ❤️ for developers</p>
+        </footer>
+    </div>
+
+    <!-- Commit Detail Modal -->
+    <div id="commit-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <span id="modal-commit-type-badge" class="badge">Feature</span>
+                <button id="close-modal-btn" class="close-btn"><i data-lucide="x"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <h3 id="modal-commit-subject">Commit Subject Line</h3>
+                
+                <div class="commit-metadata-grid">
+                    <div class="meta-row">
+                        <span class="meta-title">Commit Hash:</span>
+                        <span id="modal-commit-hash" class="meta-val code">a1b2c3d4e5f6g7h8</span>
+                        <button id="copy-hash-btn" class="btn btn-secondary btn-sm" title="Copy Hash">
+                            <i data-lucide="copy" class="sm-icon"></i>
+                        </button>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-title">Author:</span>
+                        <span id="modal-commit-author" class="meta-val">John Doe &lt;john@example.com&gt;</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-title">Date:</span>
+                        <span id="modal-commit-date" class="meta-val">2026-05-25 15:30:00</span>
+                    </div>
+                    <div class="meta-row" id="modal-scope-row">
+                        <span class="meta-title">Scope:</span>
+                        <span id="modal-commit-scope" class="meta-val code">parser</span>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="copy-markdown-btn" class="btn btn-primary">
+                        <i data-lucide="copy"></i> Copy Markdown Entry
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+</body>
+</html>

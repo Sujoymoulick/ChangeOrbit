@@ -1,0 +1,114 @@
+{
+  "repoName": "GIT COMMIT CHANGE LOG GENERATOR",
+  "repoUrl": "https://github.com/superstarryeyes/bit",
+  "generatedAt": "2026-05-25T16:23:45.937Z",
+  "stats": {
+    "totalCommits": 6,
+    "totalContributors": 2,
+    "contributors": [
+      {
+        "name": "Alice Smith",
+        "email": "alice@example.com",
+        "commits": 4
+      },
+      {
+        "name": "Bob Jones",
+        "email": "bob@example.com",
+        "commits": 2
+      }
+    ],
+    "byType": {
+      "other": 1,
+      "fix": 1,
+      "docs": 1,
+      "feat": 2,
+      "chore": 1
+    }
+  },
+  "releases": [
+    {
+      "version": "Unreleased",
+      "date": "Present",
+      "commits": [
+        {
+          "hash": "57aec05c38e63d0f41c4e181d61f1385ad9d6828",
+          "shortHash": "57aec05",
+          "author": "Alice Smith",
+          "email": "alice@example.com",
+          "date": "2026-05-25T21:05:51+05:30",
+          "rawSubject": "just some internal cleanup without conventional prefix",
+          "type": "other",
+          "scope": null,
+          "isBreaking": false,
+          "description": "just some internal cleanup without conventional prefix",
+          "tag": null
+        },
+        {
+          "hash": "e87764d1ffbf35de40c70b1344686cfba45bdad5",
+          "shortHash": "e87764d",
+          "author": "Alice Smith",
+          "email": "alice@example.com",
+          "date": "2026-05-25T21:05:51+05:30",
+          "rawSubject": "fix(main): resolve index out of bounds in entrypoint",
+          "type": "fix",
+          "scope": "main",
+          "isBreaking": false,
+          "description": "resolve index out of bounds in entrypoint",
+          "tag": null
+        },
+        {
+          "hash": "52fd138d4f141fd717e6cf44ff781e4f05976782",
+          "shortHash": "52fd138",
+          "author": "Bob Jones",
+          "email": "bob@example.com",
+          "date": "2026-05-25T21:05:51+05:30",
+          "rawSubject": "docs: improve documentation and guidelines",
+          "type": "docs",
+          "scope": null,
+          "isBreaking": false,
+          "description": "improve documentation and guidelines",
+          "tag": null
+        },
+        {
+          "hash": "1a32cbceb3206de37acc5f61f8493bb12f2188a2",
+          "shortHash": "1a32cbc",
+          "author": "Bob Jones",
+          "email": "bob@example.com",
+          "date": "2026-05-25T21:05:51+05:30",
+          "rawSubject": "feat(parser): add commit parser core class",
+          "type": "feat",
+          "scope": "parser",
+          "isBreaking": false,
+          "description": "add commit parser core class",
+          "tag": null
+        },
+        {
+          "hash": "7d6194ead893337b6229117c1691705728ef5e58",
+          "shortHash": "7d6194e",
+          "author": "Alice Smith",
+          "email": "alice@example.com",
+          "date": "2026-05-25T21:05:51+05:30",
+          "rawSubject": "feat: add main script entrypoint",
+          "type": "feat",
+          "scope": null,
+          "isBreaking": false,
+          "description": "add main script entrypoint",
+          "tag": null
+        },
+        {
+          "hash": "2240caa28f75926fda1b41e7ea5e9d8e804b18f2",
+          "shortHash": "2240caa",
+          "author": "Alice Smith",
+          "email": "alice@example.com",
+          "date": "2026-05-25T21:05:47+05:30",
+          "rawSubject": "chore: initial commit",
+          "type": "chore",
+          "scope": null,
+          "isBreaking": false,
+          "description": "initial commit",
+          "tag": null
+        }
+      ]
+    }
+  ]
+}
