@@ -1,0 +1,1 @@
+# Git Commit Changelog Generator
