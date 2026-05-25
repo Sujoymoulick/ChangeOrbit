@@ -1,122 +1,175 @@
-# ChangeOrbit 🚀
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Sujoymoulick/ChangeOrbit/main/public/changeorbitlogo.png" alt="ChangeOrbit Logo" width="120" height="120" style="border-radius: 28px; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.25);" />
+</p>
 
-ChangeOrbit is an elegant, zero-dependency **Git Conventional Commit Changelog Generator** and **Premium Interactive Dashboard** (Single Page App) designed for modern developers.
+<h1 align="center">ChangeOrbit</h1>
 
-It automatically parses your project's commit history based on the [Conventional Commits specification](https://www.conventionalcommits.org/), compiles the data into a classic `CHANGELOG.md` file, creates a structured `changelog.json` database, and serves a visually stunning interactive dashboard with zero workspace clutter!
+<p align="center">
+  <strong>Sleek & Robust Zero-Dependency conventional Git Commit Changelog Generator & Interactive Web Dashboard</strong>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/changeorbit">
+    <img src="https://img.shields.io/npm/v/changeorbit.svg?style=flat-square&color=00F2FE" alt="NPM Version" />
+  </a>
+  <a href="https://www.npmjs.com/package/changeorbit">
+    <img src="https://img.shields.io/npm/dm/changeorbit.svg?style=flat-square&color=9D4EE7" alt="NPM Downloads" />
+  </a>
+  <a href="https://github.com/Sujoymoulick/ChangeOrbit/stargazers">
+    <img src="https://img.shields.io/github/stars/Sujoymoulick/ChangeOrbit.svg?style=flat-square&color=F59E0B" alt="GitHub Stars" />
+  </a>
+  <a href="https://github.com/Sujoymoulick/ChangeOrbit/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Sujoymoulick/ChangeOrbit.svg?style=flat-square&color=10B981" alt="License" />
+  </a>
+</p>
+
+---
+
+**ChangeOrbit** is a premium developer tool designed to orbit your repository commit history. It parses Git Conventional Commit logs, compiles structured data, automatically updates standard markdown changelogs, and serves a visually stunning interactive timeline dashboard in your default browser—all with **zero workspace clutter** and **zero NPM dependencies**!
 
 ---
 
 ## 🌟 Key Features
 
-* **Zero-Dependency CLI**: Installs in seconds, written completely in native Node.js with no third-party package dependencies.
-* **Conventional Commit Parser**: Categorizes commits dynamically into Features, Bug Fixes, Docs, Refactoring, Performance, and more.
-* **Seamless Git Tag Support**: Groups commits chronologically under Git tags, falling back to date blocks.
-* **Interactive Dashboard Web Console**: Visualizes commit metrics, contributors list, search bars, category filters, and modal copy buttons.
-* **Zero Clutter Web Server**: Starts a built-in static web server and hosts your interactive timeline *without* adding HTML, CSS, or JS files to your codebase.
-* **Instant Paste Parser**: A live textbox in the dashboard lets you copy-paste raw terminal logs from **any** other codebase on your computer to visualize them instantly in the browser.
-* **Static Export Action**: Export the visual dashboard, styling, and database to any folder (e.g., `./docs`) for instant hosting on GitHub Pages, Netlify, or Vercel.
+* 🚀 **Zero-Dependency CLI Core**: Built entirely in pure, native Node.js. Installs instantly and runs globally with no third-party package overhead.
+* 📝 **Conventional Commit Parser**: Auto-categorizes commit types (`feat`, `fix`, `docs`, `refactor`, `perf`, `chore`, etc.) with strict validation mode.
+* 🏷️ **Git Tag Resolution**: Groups commits chronologically under active Git release tags, falling back seamlessly to time-based groups.
+* 🌐 **Interactive Dashboard & Search**: Features full-viewport responsive timelines, multi-contributor avatars, search indexing, category filters, and markdown copy shortcuts.
+* 🔐 **Seamless GitHub Profile Sync**: Real-time integration with the GitHub API to securely synchronize user names, emails, bios, and active avatar icons on timeline entries.
+* 🔄 **Dynamic Port-Collision safety**: Launches the local authentication and dashboard server on port `9099` (auto-incrementing to `9100+` on address clashes) and automatically redirects the browser.
+* 📂 **Standalone Exporter**: Compiles and bundles all **7 visual design assets** (HTML/CSS/JS/Logo) alongside your parsed JSON database to instantly host on GitHub Pages, Netlify, or Vercel.
 
 ---
 
-## 📦 Installation
+## 📦 Installation & Quick Start
 
-ChangeOrbit can be run directly using `npx` or installed globally via npm:
+ChangeOrbit works as a global CLI or can be run on the fly via `npx` in any project folder:
 
 ```bash
-# Run instantly without installation
-npx changeorbit
+# Run instantly without installing
+npx changeorbit serve
 
-# Or install globally
+# Or install globally on your machine
 npm install -g changeorbit
 ```
 
 ---
 
-## 🚀 Usage & Commands
+## 🛠️ CLI Reference & Subcommands
 
-### 1. Compile Changelog Files
-Run the CLI in the root directory of your Git repository:
+Run `changeorbit` inside the root of any repository to start compiling logs:
 
 ```bash
-# Generates CHANGELOG.md & changelog.json in the current folder
-changeorbit
+changeorbit [options]
 ```
 
-#### CLI Flags:
-| Flag | Description | Default |
-| --- | --- | --- |
-| `-r, --repo <path>` | Path to target Git repository | `.` |
-| `-o, --output <path>` | Directory to write CHANGELOG.md and changelog.json | `.` |
-| `--repo-url <url>` | Base URL of web git provider (to link commits) | Auto-detected |
-| `--strict` | Discard non-conventional commits | `false` |
-| `-s, --serve` | Start the local server immediately after parsing | `false` |
-| `-v, --verbose` | Enable verbose developer logging | `false` |
-| `-h, --help` | Show command instructions | |
+### 1. Available Subcommands
 
----
+| Command | Description |
+| --- | --- |
+| `changeorbit serve [options]` | Generates commit databases and boots the local dashboard HTTP web server. |
+| `changeorbit export <dir>` | Copies all 7 pre-packaged dashboard visual files and database to `<dir>` for CDNs. |
+| `changeorbit status` | Displays active local GitHub profile credentials and token setup status. |
+| `changeorbit logout` | Safely purges cached GitHub session credentials and tokens. |
 
-### 2. Launch the Interactive Dashboard
-Run the `serve` command to launch the visual timeline and analytics dashboard on a local port (defaults to `8080`):
+### 2. Global CLI Options
 
-```bash
-changeorbit serve
+You can pass these options to customize the output or point to other repositories:
+
+```text
+Options:
+  -r, --repo <path>       Path to Git repository (default: ".")
+  -o, --output <path>     Directory to write CHANGELOG.md & changelog.json (default: ".")
+  --repo-url <url>        Base URL of web Git provider (to link commits)
+  --strict                Strict mode (ignores non-conventional commits)
+  -s, --serve             Start dashboard server immediately after generation
+  -v, --verbose           Print detailed debug logs
+  -h, --help              Show help information
 ```
-*If port 8080 is already taken by another application, ChangeOrbit will scan and connect to the next available port automatically.*
 
----
-
-### 3. Export Dashboard for Deployment (GitHub Pages)
-Copy the pre-packaged HTML, CSS, JS dashboard assets along with your local `changelog.json` database into any folder:
+### 3. Verification Examples
 
 ```bash
+# Compile conventional logs in strict mode
+changeorbit --strict
+
+# Compile logs for a different folder and override the remote origin URL
+changeorbit --repo ../my-other-project --repo-url https://github.com/user/project
+
+# Bundle the premium dashboard for GitHub Pages
 changeorbit export ./docs
 ```
-Now, you can commit the `./docs` directory to your repository, point **GitHub Pages** to host from `./docs`, and enjoy a hosted, interactive release dashboard!
 
 ---
 
-## 🔗 Continuous Automation (Git Hooks)
+## 🔗 Automation: Auto-Compile on Every Commit
 
-Ensure your documentation is always in sync with your source code by auto-compiling changelogs on every new commit.
+You can keep your timeline database and markdown changelog perfectly synced with your code by adding a simple Git post-commit hook.
 
-1. Open or create a file named `post-commit` inside your target project's `.git/hooks/` directory:
+1. Create a `post-commit` script inside your project's `.git/hooks/` directory:
    ```bash
    nano .git/hooks/post-commit
    ```
-2. Add the ChangeOrbit execution script:
+2. Insert the execution shell script:
    ```bash
    #!/bin/sh
-   # Auto-compile latest commits to CHANGELOG on commit
-   npx changeorbit
+   # Automatically compile conventional commits on commit
+   changeorbit
    ```
-3. Make the hook executable:
+3. Mark the hook file as executable:
    ```bash
    chmod +x .git/hooks/post-commit
    ```
 
-Now, every time you make a commit locally, your markdown changelog and JSON database will update automatically!
+Now, every time you commit locally, ChangeOrbit compiles the newest timeline entries in the background!
 
 ---
 
-## 📝 Conventional Commits Reference
+## 📝 Commit Formatting Guide
 
-To get the most out of ChangeOrbit, format your commits as follows:
+ChangeOrbit leverages the standard **Conventional Commits** format. Structure your commit messages like this:
+
 ```text
 <type>(<optional-scope>)<!-breaking-indicator>: <description>
 ```
 
-### Examples:
-* `feat(parser): add commit parser core class` — Adds a feature in the parser scope.
-* `fix(main): resolve index out of bounds in entrypoint` — Fixes a bug in the main scope.
-* `docs: improve documentation and guidelines` — Standard documentation update.
-* `feat(auth)!: replace sessions with JWT auth` — Breaking change in the auth scope (uses `!`).
+### Standard Types Map:
+* `feat`: A new feature (e.g. `feat(parser): add conventional check`)
+* `fix`: A bug fix (e.g. `fix(timeline): resolve vertical alignment`)
+* `docs`: Documentation updates (e.g. `docs: update setup commands`)
+* `perf`: Performance optimizations (e.g. `perf(render): speed up canvas`)
+* `refactor`: Refactoring changes (e.g. `refactor(server): wrap port callbacks`)
+
+*Note: Add a `!` after the scope to mark it as a **breaking change** (e.g., `feat(auth)!: switch to token-based headers`).*
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contributing & Local Development
 
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feat/my-new-feature`).
-3. Make your changes and commit using Conventional Commits.
-4. Run `node bin/cli.js` to compile the changelogs.
-5. Submit a Pull Request!
+1. Fork the repository on GitHub.
+2. Link your local build globally to test edits anywhere on your Mac:
+   ```bash
+   # Run inside the project root directory
+   npm link
+   ```
+3. Create your custom feature branch (`git checkout -b feat/premium-effects`).
+4. Commit your changes using Conventional Commit messages.
+5. Verify changes locally by typing `changeorbit --help` in any repository, and submit a Pull Request!
+
+---
+
+## ☕ Buy Me a Coffee
+
+If **ChangeOrbit** helped visualize your codebase timelines, speed up your release planning, or added aesthetic value to your developer workflow, consider supporting my work!
+
+<p align="left">
+  <a href="https://paypal.me/SujoyMoulick?locale.x=en_GB&country.x=IN" target="_blank">
+    <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal&logoColor=white&color=003087" alt="Donate with PayPal" />
+  </a>
+</p>
+
+Your generous contributions help keep this zero-dependency project actively maintained and updated with new premium UI layouts. Thank you so much for your support! ❤️
+
+---
+
+*Created with ❤️ by [Sujoy Moulick](https://github.com/Sujoymoulick) & [superstarryeyes](https://github.com/superstarryeyes). Licensed under the MIT License.*
