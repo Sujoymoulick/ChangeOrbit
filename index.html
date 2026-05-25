@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangeOrbit — Visual Conventional Commit Timeline Changelog</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+    <!-- DotField Canvas Wrapper -->
+    <div id="hero-canvas-wrapper" class="hero-canvas-wrapper">
+        <div id="dot-field" class="dot-field-container"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="landing-container">
+        
+        <!-- Header -->
+        <header class="landing-header">
+            <div class="header-logo">
+                <img src="changeorbitlogo.png" alt="ChangeOrbit Logo" style="width: 42px; height: 42px; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.2));">
+                <div class="logo-text" style="display: flex; align-items: center; gap: 8px;">
+                    <h1>Change<span>Orbit</span></h1>
+                    <span id="version-badge" class="badge" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; background: rgba(0, 242, 254, 0.12); color: var(--primary-accent); border: 1px solid rgba(0, 242, 254, 0.25); font-weight: 600; letter-spacing: 0.2px;">v1.0.5</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#cli-commands" class="btn btn-secondary">
+                    <i data-lucide="terminal"></i> CLI Commands
+                </a>
+                <a href="#contributors" class="btn btn-secondary">
+                    <i data-lucide="users"></i> Contributors
+                </a>
+                <a href="changeorbit.html" class="btn btn-primary">
+                    <i data-lucide="layout-dashboard"></i> Launch Dashboard
+                </a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">Zero-Dependency CLI Generator</div>
+            <h2>Orbit Your Commit History with <span>ChangeOrbit</span></h2>
+            <p class="hero-subtitle">
+                Instantly turn your Git repository conventional logs into a premium, interactive release timeline. Complete with real-time GitHub profile sync, star metrics, and contributor matching.
+            </p>
+            
+            <div class="hero-actions">
+                <a href="#install" class="btn btn-primary">
+                    <i data-lucide="download"></i> Get Started
+                </a>
+                <a href="changeorbit.html" class="btn btn-secondary">
+                    <i data-lucide="play"></i> Live Dashboard
+                </a>
+            </div>
+        </section>
+
+        <!-- CLI Demo Mock Terminal -->
+        <div class="glass-card terminal-card">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <span class="terminal-title">changeorbit serve</span>
+                <i data-lucide="terminal" style="width: 14px; height: 14px; color: var(--text-muted);"></i>
+            </div>
+            <div class="terminal-body">
+                <div class="line-input">npx changeorbit serve</div>
+                <div class="line-output">
+ ██████╗██╗  ██╗ █████╗ ███╗   ██╗ ██████╗ ███████╗     ██████╗ ██████╗ ██████╗ ██╗████████╗
+██╔════╝██║  ██║██╔══██╗████╗  ██║██╔════╝ ██╔════╝    ██╔═══██╗██╔══██╗██╔══██╗██║╚══██╔══╝
+██║     ███████║███████║██╔██╗ ██║██║  ███╗█████╗░░    ██║   ██║██████╔╝██████╔╝██║   ██║   
+██║     ██╔══██║██╔══██║██║╚██╗██║██║   ██║██╔══╝░░    ██║   ██║██╔══██╗██╔══██╗██║   ██║   
+╚██████╗██║  ██║██║  ██║██║ ╚████║╚██████╔╝███████╗    ╚██████╔╝██║  ██║██████╔╝██║   ██║   
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝     ╚══════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝   ╚═╝   
+
+👤 Active Session: Sujoy Moulick (@Sujoymoulick)
+Generating ChangeOrbit logs...
+
+✅ Structured Database saved to: changelog.json
+✅ Markdown Document saved to: CHANGELOG.md
+
+🌐 ChangeOrbit Interactive Dashboard is running!
+👉 Open: http://localhost:9099/changeorbit.html</div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <section class="features-section">
+            <div class="section-title">
+                <h3>Designed for Modern Developers</h3>
+                <p>A beautiful aesthetic paired with state-of-the-art developer sync utilities.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <h4>GitHub Profile Sync</h4>
+                    <p>Integrates your active terminal GitHub account to sync profile bios, real avatar pictures, and matching contributor commits on your timeline.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="package"></i>
+                    </div>
+                    <h4>Zero-Dependency Core</h4>
+                    <p>Written entirely in pure, native Node.js and static standard modules. Zero NPM packages are installed, ensuring instant, globally safe setup.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="monitor"></i>
+                    </div>
+                    <h4>Interactive Dashboard</h4>
+                    <p>Features instant search indexing, conventional category filter pills, dynamic contributor analytics, and a raw log paste-and-parse playground.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="file-up"></i>
+                    </div>
+                    <h4>Static Directory Exporter</h4>
+                    <p>Export a self-contained static folder ready for standard static hosting providers, including GitHub Pages, Netlify, or Vercel.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation & Usage Guide -->
+        <section id="install" class="guide-section">
+            <div class="guide-layout">
+                <div class="guide-text">
+                    <h4>Get Started in Under a Minute</h4>
+                    <p>
+                        ChangeOrbit is packaged as a standard global executable. Follow this simple guide to deploy your visual commit timelines.
+                    </p>
+                    
+                    <div class="steps-list">
+                        <div class="step-item">
+                            <span class="step-num">1</span>
+                            <div class="step-details">
+                                <h5>Install or Run Instantly</h5>
+                                <p>Execute globally via NPM or trigger a lightweight transient server command using <code>npx</code>.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">2</span>
+                            <div class="step-details">
+                                <h5>Generate Changelog & Database</h5>
+                                <p>Run in any local repository to instantly parse conventional logs and compile standard CHANGELOG.md files.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">3</span>
+                            <div class="step-details">
+                                <h5>Launch the Server</h5>
+                                <p>Spin up the built-in HTTP server to securely authenticate with GitHub and host your timeline.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">4</span>
+                            <div class="step-details">
+                                <h5>Static Exporting</h5>
+                                <p>Dump the visual dashboard, styling, and database files into a self-contained static directory for simple deployment.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-num">5</span>
+                            <div class="step-details">
+                                <h5>Session Control</h5>
+                                <p>Check connection credentials status or log out completely with simple CLI authentication tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Code Snippets Card -->
+                <div class="glass-card guide-code-card">
+                    <div class="guide-code-block">
+                        <span class="code-title">1. Installation</span>
+                        <div class="code-box">
+                            <pre><code># Install globally
+npm install -g changeorbit
+
+# Or run instantly without installing
+npx changeorbit serve</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-code-block">
+                        <span class="code-title">2. Parse & Compile Logs</span>
+                        <div class="code-box">
+                            <pre><code># Run in any Git repository
+changeorbit
+
+# In strict conventional commit mode
+changeorbit --strict
+
+# Specific repo path & override url
+changeorbit --repo ../repo --repo-url https://github.com/user/repo</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-code-block">
+                        <span class="code-title">3. Start Interactive Server</span>
+                        <div class="code-box">
+                            <pre><code># Start dashboard on port 9099
+changeorbit serve
+
+# Generate logs and serve immediately
+changeorbit -s</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-code-block">
+                        <span class="code-title">4. Static Exporter</span>
+                        <div class="code-box">
+                            <pre><code># Export visual files & JSON to target folder
+changeorbit export ./public-docs</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="guide-code-block">
+                        <span class="code-title">5. Session Authentication</span>
+                        <div class="code-box">
+                            <pre><code># Check active profile session status
+changeorbit status
+
+# Log out and clear saved GitHub token
+changeorbit logout</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLI Command Reference Section -->
+        <section id="cli-commands" class="cli-section" style="margin-bottom: 80px; scroll-margin-top: 40px;">
+            <div class="section-title">
+                <h3>CLI Reference</h3>
+                <p>Complete list of subcommands and parameters available in the ChangeOrbit executable.</p>
+            </div>
+            
+            <div class="cli-reference-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <!-- Commands -->
+                <div class="glass-card" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 20px;">
+                    <h4 style="color: var(--primary-accent); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="terminal" style="width: 18px; height: 18px;"></i> Subcommands
+                    </h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 18px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit serve</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Generates conventional commit databases and boots the local dashboard HTTP web server.</p>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit export &lt;dir&gt;</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Bundles all dashboard files, assets, and database into a single folder, ready for static CDN deployment.</p>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit status</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Checks the active local GitHub session profile status (username, email, and PAT configurations).</p>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <code style="font-family: 'JetBrains Mono', monospace; color: #FFF; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1);">changeorbit logout</code>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Clears and deletes local cached GitHub session tokens and profile assets securely.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Options -->
+                <div class="glass-card" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 20px;">
+                    <h4 style="color: var(--secondary-accent); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="sliders" style="width: 18px; height: 18px;"></i> Global Options
+                    </h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-r, --repo</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Target path to local Git repository (default: current folder <code>.</code>).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-o, --output</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Output path to compile files to (default: current folder <code>.</code>).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">--repo-url</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Manual Git remote origin fallback to link commits to web pages.</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">--strict</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Enforce strict conventional commit checking (ignores other types).</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-s, --serve</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Directly start interactive web host dashboard server after compile.</span>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <code style="font-family: 'JetBrains Mono', monospace; color: var(--secondary-accent); background: rgba(157, 78, 221, 0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(157, 78, 221, 0.18); flex-shrink: 0; min-width: 110px; text-align: center;">-h, --help</code>
+                            <span style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4;">Displays visual ASCII banner and interactive option descriptions.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributors Section -->
+        <section id="contributors" class="contributors-section" style="scroll-margin-top: 40px;">
+            <div class="section-title">
+                <h3>Core Contributors</h3>
+                <p>The developers bringing ChangeOrbit to your terminal workflows.</p>
+            </div>
+            
+            <div class="contributors-grid">
+                <!-- Contributor 1 -->
+                <div class="glass-card contributor-card">
+                    <div class="contributor-avatar-wrapper">
+                        <img src="https://github.com/Sujoymoulick.png" alt="Sujoy Moulick">
+                    </div>
+                    <div class="contributor-details">
+                        <h4>Sujoy Moulick</h4>
+                        <span class="contributor-role">Project Founder & Lead Architect</span>
+                        <p class="contributor-bio">
+                            Creator of ChangeOrbit. Passionate about crafting high-fidelity CLI developer experiences, zero-dependency tools, and premium responsive web timelines.
+                        </p>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Sujoymoulick" target="_blank">
+                                <i data-lucide="github" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> @Sujoymoulick
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contributor 2 -->
+                <div class="glass-card contributor-card">
+                    <div class="contributor-avatar-wrapper">
+                        <img src="https://github.com/superstarryeyes.png" alt="superstarryeyes">
+                    </div>
+                    <div class="contributor-details">
+                        <h4>superstarryeyes</h4>
+                        <span class="contributor-role">Core Contributor</span>
+                        <p class="contributor-bio">
+                            Developer of the Bit ANSI font library, co-designer of ChangeOrbit CLI ASCII brand components and repository sync mechanisms.
+                        </p>
+                        <div class="contributor-links">
+                            <a href="https://github.com/superstarryeyes" target="_blank">
+                                <i data-lucide="github" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> @superstarryeyes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <p>ChangeOrbit &bull; Created with ❤️ for developers</p>
+            <p>&copy; 2026 Sujoy Moulick. MIT License.</p>
+        </footer>
+
+    </div>
+
+    <!-- DotField Canvas Script -->
+    <script>
+        lucide.createIcons();
+
+        /* --- DotField Component (Vanilla JS + CSS translation) --- */
+        class DotField {
+            constructor(container, options = {}) {
+                this.container = container;
+                this.options = {
+                    dotRadius: 1.6,
+                    dotSpacing: 14,
+                    cursorRadius: 320,
+                    cursorForce: 0.15,
+                    bulgeOnly: true,
+                    bulgeStrength: 65,
+                    glowRadius: 200,
+                    sparkle: true,
+                    waveAmplitude: 2,
+                    gradientFrom: 'rgba(0, 242, 254, 0.28)',
+                    gradientTo: 'rgba(157, 78, 221, 0.18)',
+                    glowColor: '#120F17',
+                    ...options
+                };
+                
+                this.canvas = document.createElement('canvas');
+                this.canvas.style.position = 'absolute';
+                this.canvas.style.inset = '0';
+                this.canvas.style.width = '100%';
+                this.canvas.style.height = '100%';
+                this.canvas.style.background = 'transparent';
+                this.container.appendChild(this.canvas);
+                
+                // Create SVG overlay for mouse glow
+                this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                this.svg.style.position = 'absolute';
+                this.svg.style.inset = '0';
+                this.svg.style.width = '100%';
+                this.svg.style.height = '100%';
+                this.svg.style.pointerEvents = 'none';
+                
+                this.glowId = `dot-field-glow-${Math.random().toString(36).slice(2, 9)}`;
+                this.svg.innerHTML = `
+                    <defs>
+                        <radialGradient id="${this.glowId}">
+                            <stop offset="0%" stop-color="rgba(0, 242, 254, 0.08)" />
+                            <stop offset="100%" stop-color="transparent" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="-9999" cy="-9999" r="${this.options.glowRadius}" fill="url(#${this.glowId})" style="opacity: 0; transition: opacity 0.3s ease; mix-blend-mode: screen;" />
+                `;
+                this.container.appendChild(this.svg);
+                this.glowCircle = this.svg.querySelector('circle');
+                
+                this.ctx = this.canvas.getContext('2d', { alpha: true });
+                this.dots = [];
+                this.mouse = { x: -9999, y: -9999, prevX: -9999, prevY: -9999, speed: 0 };
+                this.size = { w: 0, h: 0, offsetX: 0, offsetY: 0 };
+                this.glowOpacity = 0;
+                this.engagement = 0;
+                this.frameCount = 0;
+                
+                this.init();
+            }
+            
+            init() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                let resizeTimer;
+                
+                const doResize = () => {
+                    const rect = this.canvas.parentElement.getBoundingClientRect();
+                    const w = rect.width;
+                    const h = rect.height;
+                    
+                    this.canvas.width = w * dpr;
+                    this.canvas.height = h * dpr;
+                    this.canvas.style.width = `${w}px`;
+                    this.canvas.style.height = `${h}px`;
+                    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    
+                    this.size = {
+                        w,
+                        h,
+                        offsetX: rect.left + window.scrollX,
+                        offsetY: rect.top + window.scrollY
+                    };
+                    
+                    this.buildDots(w, h);
+                };
+                
+                const resize = () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(doResize, 100);
+                };
+                
+                const onMouseMove = (e) => {
+                    this.mouse.x = e.pageX - this.size.offsetX;
+                    this.mouse.y = e.pageY - this.size.offsetY;
+                    this.engagement = 1;
+                };
+                
+                const updateMouseSpeed = () => {
+                    const m = this.mouse;
+                    const dx = m.prevX - m.x;
+                    const dy = m.prevY - m.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    m.speed += (dist - m.speed) * 0.5;
+                    if (m.speed < 0.001) m.speed = 0;
+                    m.prevX = m.x;
+                    m.prevY = m.y;
+                };
+                
+                this.speedInterval = setInterval(updateMouseSpeed, 20);
+                
+                const tick = () => {
+                    this.frameCount++;
+                    const dots = this.dots;
+                    const m = this.mouse;
+                    const { w, h } = this.size;
+                    const p = this.options;
+                    const len = dots.length;
+                    const t = this.frameCount * 0.02;
+                    const TWO_PI = Math.PI * 2;
+                    
+                    const targetEngagement = Math.min(m.speed / 4, 1);
+                    this.engagement += (targetEngagement - this.engagement) * 0.06;
+                    if (this.engagement < 0.001) this.engagement = 0;
+                    
+                    this.glowOpacity += (Math.max(this.engagement, 0.4) - this.glowOpacity) * 0.08;
+                    
+                    if (this.glowCircle && m.x > -9000) {
+                        this.glowCircle.setAttribute('cx', m.x);
+                        this.glowCircle.setAttribute('cy', m.y);
+                        this.glowCircle.style.opacity = this.glowOpacity;
+                    }
+                    
+                    this.ctx.clearRect(0, 0, w, h);
+                    
+                    const grad = this.ctx.createLinearGradient(0, 0, w, h);
+                    grad.addColorStop(0, p.gradientFrom);
+                    grad.addColorStop(1, p.gradientTo);
+                    this.ctx.fillStyle = grad;
+                    
+                    const cr = p.cursorRadius;
+                    const crSq = cr * cr;
+                    const rad = p.dotRadius / 2;
+                    const isBulge = p.bulgeOnly;
+                    
+                    this.ctx.beginPath();
+                    
+                    for (let i = 0; i < len; i++) {
+                        const d = dots[i];
+                        const dx = m.x - d.ax;
+                        const dy = m.y - d.ay;
+                        const distSq = dx * dx + dy * dy;
+                        
+                        if (distSq < crSq && m.x > -9000) {
+                            const dist = Math.sqrt(distSq);
+                            if (isBulge) {
+                                const t = 1 - dist / cr;
+                                const push = t * t * p.bulgeStrength * Math.max(this.engagement, 0.6);
+                                const angle = Math.atan2(dy, dx);
+                                d.sx += (d.ax - Math.cos(angle) * push - d.sx) * 0.15;
+                                d.sy += (d.ay - Math.sin(angle) * push - d.sy) * 0.15;
+                            } else {
+                                const angle = Math.atan2(dy, dx);
+                                const move = (500 / dist) * (m.speed * p.cursorForce);
+                                d.vx += Math.cos(angle) * -move;
+                                d.vy += Math.sin(angle) * -move;
+                            }
+                        } else if (isBulge) {
+                            d.sx += (d.ax - d.sx) * 0.1;
+                            d.sy += (d.ay - d.sy) * 0.1;
+                        }
+                        
+                        if (!isBulge) {
+                            d.vx *= 0.9;
+                            d.vy *= 0.9;
+                            d.x = d.ax + d.vx;
+                            d.y = d.ay + d.vy;
+                            d.sx += (d.x - d.sx) * 0.1;
+                            d.sy += (d.y - d.sy) * 0.1;
+                        }
+                        
+                        let drawX = d.sx;
+                        let drawY = d.sy;
+                        if (p.waveAmplitude > 0) {
+                            drawY += Math.sin(d.ax * 0.03 + t) * p.waveAmplitude;
+                            drawX += Math.cos(d.ay * 0.03 + t * 0.7) * p.waveAmplitude * 0.5;
+                        }
+                        
+                        if (p.sparkle) {
+                            const hash = ((i * 2654435761) ^ (this.frameCount >> 3)) >>> 0;
+                            if ((hash % 100) < 3) {
+                                this.ctx.moveTo(drawX + rad * 1.8, drawY);
+                                this.ctx.arc(drawX, drawY, rad * 1.8, 0, TWO_PI);
+                            } else {
+                                this.ctx.moveTo(drawX + rad, drawY);
+                                this.ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+                            }
+                        } else {
+                            this.ctx.moveTo(drawX + rad, drawY);
+                            this.ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+                        }
+                    }
+                    
+                    this.ctx.fill();
+                    
+                    this.raf = requestAnimationFrame(tick);
+                };
+                
+                doResize();
+                window.addEventListener('resize', resize);
+                window.addEventListener('mousemove', onMouseMove, { passive: true });
+                this.raf = requestAnimationFrame(tick);
+                
+                this.destroy = () => {
+                    cancelAnimationFrame(this.raf);
+                    clearInterval(this.speedInterval);
+                    clearTimeout(resizeTimer);
+                    window.removeEventListener('resize', resize);
+                    window.removeEventListener('mousemove', onMouseMove);
+                };
+            }
+            
+            buildDots(w, h) {
+                const p = this.options;
+                const step = p.dotRadius + p.dotSpacing;
+                const cols = Math.floor(w / step);
+                const rows = Math.floor(h / step);
+                const padX = (w % step) / 2;
+                const padY = (h % step) / 2;
+                const dots = new Array(rows * cols);
+                let idx = 0;
+                
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                        const ax = padX + col * step + step / 2;
+                        const ay = padY + row * step + step / 2;
+                        dots[idx++] = { ax, ay, sx: ax, sy: ay, vx: 0, vy: 0, x: ax, y: ay };
+                    }
+                }
+                this.dots = dots;
+            }
+        }
+
+        // Initialize DotField
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('dot-field');
+            if (container) {
+                new DotField(container);
+            }
+        });
+    </script>
+</body>
+</html>
